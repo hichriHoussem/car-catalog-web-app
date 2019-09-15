@@ -27,7 +27,7 @@ const getValues = (entityId?: string): CarType => {
   const oldList = JSON.parse(oldLostString);
 
   return !!entityId
-    ? oldList.filter((c: CarType) => c.id === parseInt(entityId, 0))
+    ? oldList.filter((c: CarType) => c.id === parseInt(entityId, 0))[0]
     : {
         model: '',
         manufacturer: '',
@@ -49,7 +49,9 @@ function CarInput(props: FieldDetails) {
     props.editFields(props.selector, e.target.value);
   };
 
-  let inputType = <input onChange={onInputChange} />;
+  let inputType = (
+    <input value={savedValues[props.selector]} onChange={onInputChange} />
+  );
   let validator = getValidator(props.selector);
 
   if (props.selector === 'transmission') {
