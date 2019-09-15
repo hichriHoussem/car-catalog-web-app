@@ -1,5 +1,7 @@
 import React, { MouseEvent, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import EmptyList from './EmptyList';
+import Field from './Field';
 
 interface TParams {
   id: string;
@@ -41,46 +43,11 @@ const carsList = [
   },
 ];
 
-interface FieldDetails {
-  car: CarType;
-  selector: string;
-  isEditMode: boolean;
-}
-
-function CarInput(props: FieldDetails) {
-  return (
-    <div>
-      <input />
-    </div>
-  );
-}
-
-function Field(props: FieldDetails) {
-  if (props.isEditMode) {
-    return <CarInput {...props} />;
-  }
-  return (
-    <div>
-      <span>{props.selector}</span>
-      {props.car[props.selector]}
-    </div>
-  );
-}
-
 function Car({ match }: RouteComponentProps<TParams>) {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   if (!match.params.id) {
-    return (
-      <div className="right-side">
-        <div className="empty-message">
-          Select from the left list
-          <div className="car-action">
-            <button>Add a car</button>
-          </div>
-        </div>{' '}
-      </div>
-    );
+    return <EmptyList />;
   }
 
   const selectedCar = carsList.filter(
