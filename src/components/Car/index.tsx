@@ -67,7 +67,7 @@ function Car({ match }: RouteComponentProps<TParams>) {
   };
 
   return (
-    <div className="right-side">
+    <div className="right-side form">
       {Object.keys(selectedCar[0]).map((c: string) => (
         <Field
           isEditMode={isEditMode}

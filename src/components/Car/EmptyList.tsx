@@ -32,19 +32,21 @@ const EmptyList: React.FC = () => {
   if (isEditMode) {
     return (
       <div className="right-side">
-        {['model', 'manufacturer', 'transmission', 'co2', 'image'].map(
-          (c: string) => (
-            <Field
-              editFields={editFields}
-              isEditMode={true}
-              key={c}
-              selector={c}
-            />
-          )
-        )}
-        <div className="car-action">
-          <button onClick={handleAdd}>Add a car</button>
-          <button onClick={handleCancel}>Cancel</button>
+        <div className="form">
+          {['model', 'manufacturer', 'transmission', 'co2', 'image'].map(
+            (c: string) => (
+              <Field
+                editFields={editFields}
+                isEditMode={true}
+                key={c}
+                selector={c}
+              />
+            )
+          )}
+          <div className="car-action">
+            <button onClick={handleAdd}>Add a car</button>
+            <button onClick={handleCancel}>Cancel</button>
+          </div>
         </div>
       </div>
     );

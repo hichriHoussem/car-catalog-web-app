@@ -6,7 +6,7 @@ interface RadioInput {
 
 function Radio(props: RadioInput) {
   return (
-    <div>
+    <div className="field-input">
       <div className="radio">
         <label>
           <input

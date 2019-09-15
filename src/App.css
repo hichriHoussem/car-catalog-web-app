@@ -45,6 +45,15 @@
   height: 100vh;
   background-color: #00bcd4;
 }
+.right-side > .form {
+  margin: 0 auto;
+  width: 317px;
+  position: relative;
+  top: 35%;
+}
+.right-side > .form > .car-action {
+  margin-top: 20px;
+}
 .empty-message {
   display: flex;
   align-items: center;
@@ -52,4 +61,17 @@
   flex-direction: column;
   text-align: center;
   height: 100vh;
+}
+.car-field {
+  display: flex;
+}
+.car-field > .field-label {
+  min-width: 120px;
+  text-align: left;
+  text-transform: capitalize;
+  font-size: 19px;
+  font-weight: 400;
+}
+.car-field > span {
+  margin-right: 10px;
 }

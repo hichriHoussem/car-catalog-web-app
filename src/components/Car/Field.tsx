@@ -28,31 +28,23 @@ function CarInput(props: FieldDetails) {
 
   const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {};
 
-  let inputType = <input />;
+  let inputType = <input onChange={onInputChange} />;
   let validator = getValidator(props.selector);
 
-  switch (props.selector) {
-    case 'model':
-      inputType = <input onChange={onInputChange} />;
-      break;
-    case 'manufacturer':
-      inputType = <input onChange={onInputChange} />;
-      break;
-    case 'transmission':
-      inputType = <Radio onChange={onRadioChange} />;
-      break;
-    case 'co2':
-      inputType = <input onChange={onInputChange} />;
-      break;
-    case 'image':
-      inputType = <input onChange={onInputChange} />;
-      break;
-
-    default:
-      inputType = <input onChange={onInputChange} />;
-      break;
+  if (props.selector === 'transmission') {
+    inputType = <Radio onChange={onRadioChange} />;
   }
-  return <div>{inputType}</div>;
+  if (props.selector === 'image') {
+    // inputType = <Radio onChange={onRadioChange} />;
+  }
+
+  return (
+    <div className="car-field">
+      <label className="field-label">{props.selector}</label>
+      <span>:</span>
+      {inputType}
+    </div>
+  );
 }
 
 function Field(props: FieldDetails) {
