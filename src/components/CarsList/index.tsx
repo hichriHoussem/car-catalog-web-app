@@ -13,7 +13,7 @@ interface Cars {
   id: number;
   model: string;
   manufacturer: string;
-  Transmission: string;
+  transmission: string;
   coTwo: number;
   image: string;
 }
@@ -23,7 +23,7 @@ const carsList = [
     id: 1,
     model: '1',
     manufacturer: '1',
-    Transmission: '1',
+    transmission: '1',
     coTwo: 20,
     image: '1',
   },
@@ -31,7 +31,7 @@ const carsList = [
     id: 2,
     model: '2',
     manufacturer: '2',
-    Transmission: '2',
+    transmission: '2',
     coTwo: 20,
     image: '2',
   },
@@ -39,13 +39,13 @@ const carsList = [
     id: 3,
     model: '3',
     manufacturer: '3',
-    Transmission: '3',
+    transmission: '3',
     coTwo: 20,
     image: '3',
   },
 ];
 
-function Product({ match }: RouteComponentProps<TParams>) {
+function CarList({ match }: RouteComponentProps<TParams>) {
   return (
     <div className="left-aside">
       <nav>
@@ -61,4 +61,4 @@ function Product({ match }: RouteComponentProps<TParams>) {
   );
 }
 
-export default Product;
+export default CarList;
