@@ -75,3 +75,6 @@
 .car-field > span {
   margin-right: 10px;
 }
+.field-input > .radio {
+  text-align: left;
+}

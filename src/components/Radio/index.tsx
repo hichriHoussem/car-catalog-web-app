@@ -11,22 +11,22 @@ function Radio(props: RadioInput) {
         <label>
           <input
             type="radio"
-            value="option1"
+            value="automatic"
             checked={true}
             onChange={props.onChange}
           />
-          Option 1
+          Automatic
         </label>
       </div>
       <div className="radio">
         <label>
           <input
             type="radio"
-            value="option2"
+            value="manual"
             checked={false}
             onChange={props.onChange}
           />
-          Option 2
+          Manual
         </label>
       </div>
     </div>

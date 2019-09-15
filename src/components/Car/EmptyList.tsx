@@ -15,14 +15,23 @@ const EmptyList: React.FC = () => {
 
   const cars = localStorage.getItem('cars');
 
-  const editFields = (target: string, value: string): void => {};
+  const editFields = (target: string, value: string): void => {
+    setValues({
+      ...values,
+      [target]: value,
+    });
+  };
 
   const changeMode = (): void => {
     setIsEditMode(true);
   };
 
   const handleAdd = (): void => {
-    setIsEditMode(true);
+    const oldCarsString = localStorage.getItem('cars');
+    const oldCars = oldCarsString ? JSON.parse(oldCarsString) : [];
+    oldCars.push(values);
+    localStorage.setItem('cars', JSON.stringify(oldCars));
+    setIsEditMode(false);
   };
 
   const handleCancel = (): void => {

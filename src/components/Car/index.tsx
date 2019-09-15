@@ -66,10 +66,13 @@ function Car({ match }: RouteComponentProps<TParams>) {
     setIsEditMode(false);
   };
 
+  const editFields = (target: string, value: string): void => {};
+
   return (
     <div className="right-side form">
       {Object.keys(selectedCar[0]).map((c: string) => (
         <Field
+          editFields={editFields}
           isEditMode={isEditMode}
           key={c}
           car={selectedCar[0]}

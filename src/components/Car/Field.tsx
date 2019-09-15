@@ -5,7 +5,7 @@ interface FieldDetails {
   car?: CarType;
   selector: string;
   isEditMode: boolean;
-  editFields?: (target: string, value: string) => void;
+  editFields: (target: string, value: string) => void;
 }
 
 interface CarType {
@@ -24,9 +24,12 @@ const getValidator = (selector: string) => {
 function CarInput(props: FieldDetails) {
   const onInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const newValue = e.currentTarget.value;
+    props.editFields(props.selector, e.currentTarget.value);
   };
 
-  const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {};
+  const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    props.editFields(props.selector, e.target.value);
+  };
 
   let inputType = <input onChange={onInputChange} />;
   let validator = getValidator(props.selector);
