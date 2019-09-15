@@ -36,3 +36,11 @@ jobs:
       - run:
           name: Running ETE tests
           command: yarn cy:ci
+
+      - run:
+          name: Build
+          command: yarn build
+
+      - run:
+          name: Deploy to Netlify
+          command: yarn netlify:deploy

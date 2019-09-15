@@ -18,9 +18,10 @@ const App: React.FC = () => {
         >
           Learn React
         </a>
+        <div>deployed ver test</div>
       </header>
     </div>
   );
-}
+};
 
 export default App;
