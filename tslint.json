@@ -112,7 +112,18 @@
     "rulesDirectory": ["tslint-plugin-prettier"],
     "rules": {
       "prettier": true,
-      "interface-name": false
+      "interface-name": false,
+      "jsx-alignment": true,
+      "jsx-boolean-value": true,
+      "jsx-curly-spacing": [true, "never"],
+      "jsx-equals-spacing": [true, "never"],
+      "jsx-key": true,
+      "jsx-no-bind": true,
+      "jsx-no-lambda": true,
+      "jsx-no-multiline-js": true,
+      "jsx-no-string-ref": true,
+      "jsx-self-close": true,
+      "jsx-wrap-multiline": true
     }
   }
 }
