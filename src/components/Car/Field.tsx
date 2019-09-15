@@ -55,7 +55,9 @@ function CarInput(props: FieldDetails) {
   let validator = getValidator(props.selector);
 
   if (props.selector === 'transmission') {
-    inputType = <Radio onChange={onRadioChange} />;
+    inputType = (
+      <Radio value={savedValues[props.selector]} onChange={onRadioChange} />
+    );
   }
   if (props.selector === 'image') {
     // inputType = <Radio onChange={onRadioChange} />;

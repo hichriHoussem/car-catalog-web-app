@@ -22,3 +22,8 @@ export function getNewList(values: NewCar): any {
     ],
   };
 }
+
+export function getCurrentCars(): any {
+  const oldCarsString = localStorage.getItem('cars');
+  return oldCarsString ? JSON.parse(oldCarsString) : [];
+}

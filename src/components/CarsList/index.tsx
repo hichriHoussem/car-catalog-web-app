@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  RouteComponentProps,
-} from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { getCurrentCars } from '../../utils';
 
-interface TParams {
-  id: string;
-}
 interface Cars {
   id: number;
   model: string;
@@ -18,49 +11,24 @@ interface Cars {
   image: string;
 }
 
-const carsList = [
-  {
-    id: 1,
-    model: '1',
-    manufacturer: '1',
-    transmission: '1',
-    coTwo: 20,
-    image: '1',
-  },
-  {
-    id: 2,
-    model: '2',
-    manufacturer: '2',
-    transmission: '2',
-    coTwo: 20,
-    image: '2',
-  },
-  {
-    id: 3,
-    model: '3',
-    manufacturer: '3',
-    transmission: '3',
-    coTwo: 20,
-    image: '3',
-  },
-];
-
 function CarList(props: RouteComponentProps) {
   const changeMode = (): void => {
     props.history.push('/new');
   };
 
+  const carsList = getCurrentCars();
+
   return (
-    <div className="left-aside">
+    <div className="left-aside cars-list">
       <div className="car-action">
         <button onClick={changeMode}>Add a car</button>
       </div>
       <nav>
         <ul>
           {carsList.map((cl: Cars) => (
-            <li key={`car-link-${cl.id}`}>
-              <Link to={`/car/${cl.id}`}>{cl.model}</Link>
-            </li>
+            <Link key={`car-link-${cl.id}`} to={`/car/${cl.id}`}>
+              <li>{cl.model}</li>
+            </Link>
           ))}
         </ul>
       </nav>

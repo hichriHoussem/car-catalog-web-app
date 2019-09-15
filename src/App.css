@@ -38,7 +38,7 @@
 .left-aside {
   width: 400px;
   height: 100vh;
-  background-color: #607d8b;
+  background-color: #fff;
 }
 .right-side {
   width: 100%;
@@ -77,4 +77,45 @@
 }
 .field-input > .radio {
   text-align: left;
+}
+
+/* Left bar */
+.cars-list {
+}
+
+.cars-list ul {
+  list-style: none;
+  padding: 0 0;
+}
+.cars-list button {
+  width: 100%;
+  background-color: #949292;
+  border: 1px solid #949292;
+  padding: 7px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+}
+.cars-list button:hover {
+  background-color: #fff;
+  color: #949292;
+}
+.cars-list ul li {
+  cursor: pointer;
+  display: block;
+  padding: 5px 15px;
+  border-bottom: 1px solid #c7c7c7;
+  background-color: #fff;
+  text-align: left;
+  color: #b3b3b3;
+}
+.cars-list ul a {
+  text-decoration: none;
+
+  text-transform: capitalize;
+}
+.cars-list ul li:hover {
+  background-color: #c7c7c7;
+  color: #2d2d2d;
 }

@@ -2,6 +2,7 @@ import React from 'react';
 
 interface RadioInput {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
 
 function Radio(props: RadioInput) {
