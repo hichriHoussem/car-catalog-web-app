@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface TParams {
@@ -41,12 +41,24 @@ const carsList = [
   },
 ];
 
-interface CarsDetails {
+interface FieldDetails {
   car: CarType;
   selector: string;
+  isEditMode: boolean;
 }
 
-function Field(props: CarsDetails) {
+function CarInput(props: FieldDetails) {
+  return (
+    <div>
+      <input />
+    </div>
+  );
+}
+
+function Field(props: FieldDetails) {
+  if (props.isEditMode) {
+    return <CarInput {...props} />;
+  }
   return (
     <div>
       <span>{props.selector}</span>
@@ -56,6 +68,8 @@ function Field(props: CarsDetails) {
 }
 
 function Car({ match }: RouteComponentProps<TParams>) {
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+
   if (!match.params.id) {
     return (
       <div className="right-side">
@@ -73,16 +87,39 @@ function Car({ match }: RouteComponentProps<TParams>) {
     (c: CarType) => c.id === parseInt(match.params.id, 0)
   );
 
+  const handleEdit = (): void => {
+    setIsEditMode(true);
+  };
+
+  const handleRemove = (): void => {
+    setIsEditMode(true);
+  };
+
+  const handleSave = (): void => {
+    setIsEditMode(false);
+  };
+
   return (
     <div className="right-side">
       {Object.keys(selectedCar[0]).map((c: string) => (
-        <Field key={c} car={selectedCar[0]} selector={c} />
+        <Field
+          isEditMode={isEditMode}
+          key={c}
+          car={selectedCar[0]}
+          selector={c}
+        />
       ))}
 
-      <div className="car-action">
-        <button>Edit</button>
-        <button>Remove</button>
-      </div>
+      {isEditMode ? (
+        <div className="car-action">
+          <button onClick={handleSave}>Save</button>
+        </div>
+      ) : (
+        <div className="car-action">
+          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleRemove}>Remove</button>
+        </div>
+      )}
     </div>
   );
 }
