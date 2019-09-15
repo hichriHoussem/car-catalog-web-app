@@ -1,13 +1,6 @@
 import React from 'react';
 import Radio from '../Radio';
 
-interface FieldDetails {
-  car?: CarType;
-  selector: string;
-  isEditMode: boolean;
-  editFields: (target: string, value: string) => void;
-}
-
 interface CarType {
   id: number;
   model: string;
@@ -17,11 +10,36 @@ interface CarType {
   image: string;
 }
 
+interface FieldDetails {
+  car?: CarType;
+  selector: string;
+  entityId?: string;
+  editFields: (target: string, value: string) => void;
+}
+
 const getValidator = (selector: string) => {
   return (input: string): string => 'test';
 };
 
+const getValues = (entityId?: string): CarType => {
+  const oldLostString = localStorage.getItem('cars') || '';
+
+  const oldList = JSON.parse(oldLostString);
+
+  return !!entityId
+    ? oldList.filter((c: CarType) => c.id === parseInt(entityId, 0))
+    : {
+        model: '',
+        manufacturer: '',
+        transmission: '',
+        co2: '',
+        image: '',
+      };
+};
+
 function CarInput(props: FieldDetails) {
+  const savedValues = getValues(props.entityId);
+
   const onInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const newValue = e.currentTarget.value;
     props.editFields(props.selector, e.currentTarget.value);
@@ -51,7 +69,7 @@ function CarInput(props: FieldDetails) {
 }
 
 function Field(props: FieldDetails) {
-  if (props.isEditMode || !props.car) {
+  if (!!props.entityId || !props.car) {
     return <CarInput {...props} />;
   }
   return (

@@ -43,53 +43,43 @@ const carsList = [
   },
 ];
 
-function Car({ match }: RouteComponentProps<TParams>) {
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-
-  if (!match.params.id) {
-    return <EmptyList />;
+function Car(props: RouteComponentProps<TParams>) {
+  if (!props.match.params.id) {
+    return <EmptyList {...props} />;
   }
 
   const selectedCar = carsList.filter(
-    (c: CarType) => c.id === parseInt(match.params.id, 0)
+    (c: CarType) => c.id === parseInt(props.match.params.id, 0)
   );
 
   const handleEdit = (): void => {
-    setIsEditMode(true);
+    props.history.push(`/edit/${selectedCar[0].id}`);
   };
 
   const handleRemove = (): void => {
-    setIsEditMode(true);
+    props.history.push('/');
   };
 
-  const handleSave = (): void => {
-    setIsEditMode(false);
-  };
+  const changeMode = (): void => {};
 
   const editFields = (target: string, value: string): void => {};
 
   return (
     <div className="right-side form">
+      <button onClick={changeMode}>Add a car</button>
       {Object.keys(selectedCar[0]).map((c: string) => (
         <Field
           editFields={editFields}
-          isEditMode={isEditMode}
           key={c}
           car={selectedCar[0]}
           selector={c}
         />
       ))}
 
-      {isEditMode ? (
-        <div className="car-action">
-          <button onClick={handleSave}>Save</button>
-        </div>
-      ) : (
-        <div className="car-action">
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleRemove}>Remove</button>
-        </div>
-      )}
+      <div className="car-action">
+        <button onClick={handleEdit}>Edit</button>
+        <button onClick={handleRemove}>Remove</button>
+      </div>
     </div>
   );
 }

@@ -45,9 +45,16 @@ const carsList = [
   },
 ];
 
-function CarList({ match }: RouteComponentProps<TParams>) {
+function CarList(props: RouteComponentProps) {
+  const changeMode = (): void => {
+    props.history.push('/new');
+  };
+
   return (
     <div className="left-aside">
+      <div className="car-action">
+        <button onClick={changeMode}>Add a car</button>
+      </div>
       <nav>
         <ul>
           {carsList.map((cl: Cars) => (
