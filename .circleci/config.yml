@@ -35,4 +35,4 @@ jobs:
 
       - run:
           name: Running ETE tests
-          command: yarn test:ete
+          command: yarn cy:ci
