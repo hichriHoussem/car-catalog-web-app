@@ -9,8 +9,21 @@ interface NewCar {
 
 export function getNewList(values: NewCar): any {
   const oldCarsString = localStorage.getItem('cars');
-  const oldCars = oldCarsString ? JSON.parse(oldCarsString) : [];
-  const newElementId = Math.max(oldCars.map((c: NewCar) => c.id)) + 1;
+  if (!oldCarsString) {
+    return {
+      newId: 1,
+      newList: [
+        {
+          id: 1,
+          ...values,
+        },
+      ],
+    };
+  }
+  const oldCars = JSON.parse(oldCarsString);
+  const idList = oldCars.map((c: NewCar) => c.id);
+  const newElementId = Math.max(...idList) + 1;
+
   return {
     newId: newElementId,
     newList: [
