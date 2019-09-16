@@ -12,36 +12,25 @@ function CarInput(props: FieldDetails) {
   useEffect(() => {
     // Reset component
     setCurrentValue(getValues(props.entityId)[props.selector]);
-    setErrors(validate(props.selector, currentValue, errors));
+    setErrors(validate(props.selector, currentValue));
   }, [props.entityId]);
 
-  const onInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  const onInputChange = (
+    e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const newValue = e.currentTarget.value;
+    setCurrentValue(newValue || '');
+    const er = validate(props.selector, newValue);
+    setErrors(er);
     if (props.editFields) {
-      props.editFields(
-        props.selector,
-        e.currentTarget.value,
-        checkErrors(errors)
-      );
+      props.editFields(props.selector, newValue, er[props.selector]);
     }
-
-    setCurrentValue(e.currentTarget.value || '');
-    setErrors(validate(props.selector, e.currentTarget.value, errors));
-  };
-
-  const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (props.editFields) {
-      props.editFields(props.selector, e.target.value, checkErrors(errors));
-    }
-
-    setCurrentValue(e.currentTarget.value || '');
-    setErrors(validate(props.selector, e.currentTarget.value, errors));
   };
 
   let inputType = <input value={currentValue || ''} onChange={onInputChange} />;
 
   if (props.selector === 'transmission') {
-    inputType = <Radio value={currentValue || ''} onChange={onRadioChange} />;
+    inputType = <Radio value={currentValue || ''} onChange={onInputChange} />;
   }
   if (props.selector === 'image') {
     // inputType = <Radio onChange={onRadioChange} />;

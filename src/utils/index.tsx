@@ -68,25 +68,11 @@ export function removeCar(id: string): void {
 
 export function validate(
   selector: string,
-  input: string | number | null,
-  oldError: object
+  input: string | number | null
 ): object {
-  const error = {};
   const selectedValidator = validatorsMapper[selector];
-  const result = selectedValidator.isRequired
-    ? selectedValidator.validate(input)
-    : null;
-  if (result) {
-    error[selector] = result;
-  } else {
-    return {
-      ...oldError,
-      [selector]: null,
-    };
-  }
   return {
-    ...oldError,
-    ...error,
+    [selector]: selectedValidator.validate(input),
   };
 }
 

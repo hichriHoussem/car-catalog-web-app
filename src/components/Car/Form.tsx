@@ -7,7 +7,7 @@ import { validatorsMapper } from '../../data';
 
 const Form: React.FC = (props: RouteComponentProps) => {
   const [values, setValues] = useState<NewCar>({});
-  const [errors, setErrors] = useState<boolean>(false);
+  const [errors, setErrors] = useState<object>({});
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
 
   useEffect(() => {
@@ -17,15 +17,21 @@ const Form: React.FC = (props: RouteComponentProps) => {
 
   const handleAdd = (): void => {
     let requirementError = false;
+    let hasError = false;
     Object.keys(validatorsMapper).forEach((v: string) => {
       if (validatorsMapper[v].isRequired && !values[v]) {
         requirementError = true;
       }
     });
 
-    if (!errors && !requirementError) {
-      const { newId, newList } = getNewList(values, props.match.params.id);
+    Object.keys(errors).forEach((e: string) => {
+      if (errors[e]) {
+        hasError = true;
+      }
+    });
 
+    if (!hasError && !requirementError) {
+      const { newId, newList } = getNewList(values, props.match.params.id);
       saveCarsList(newList);
       props.history.push(`/car/${newId}`);
     } else {
@@ -48,7 +54,10 @@ const Form: React.FC = (props: RouteComponentProps) => {
       [target]: value,
     });
 
-    setErrors(isErrors);
+    setErrors({
+      ...errors,
+      [target]: isErrors,
+    });
   };
   return (
     <div className="right-side">
