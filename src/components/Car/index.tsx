@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import EmptyList from './EmptyList';
 import Field from './Field';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Radio from '../Radio';
 import FieldDetails from '../../interfaces/field-details';
-import { validate, checkErrors, getValues } from '../../utils';
+import { validate, getValues } from '../../utils';
 
 function CarInput(props: FieldDetails) {
   const [currentValue, setCurrentValue] = useState<string | null>(

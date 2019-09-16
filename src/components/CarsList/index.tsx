@@ -19,7 +19,7 @@ function CarList(props: RouteComponentProps) {
         <ul>
           {carsList.map((cl: Car) => (
             <Link key={`car-link-${cl.id}`} to={`/car/${cl.id}`}>
-              <li>{cl.model}</li>
+              <li className="list-element">{cl.model}</li>
             </Link>
           ))}
         </ul>

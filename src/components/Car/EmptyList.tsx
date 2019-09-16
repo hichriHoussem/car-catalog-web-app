@@ -1,8 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import NewCar from '../../interfaces/new-car';
-
 const EmptyList: React.FC = (props: RouteComponentProps) => {
   const cars = localStorage.getItem('cars');
 
