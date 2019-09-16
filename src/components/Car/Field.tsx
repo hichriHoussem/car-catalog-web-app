@@ -7,12 +7,13 @@ function CarInput(props: FieldDetails) {
   const [currentValue, setCurrentValue] = useState<string | null>(
     getValues(props.entityId)[props.selector]
   );
-  const [errors, setErrors] = useState<object>({});
+  const [errors, setErrors] = useState<object>(
+    validate(props.selector, currentValue)
+  );
 
   useEffect(() => {
     // Reset component
     setCurrentValue(getValues(props.entityId)[props.selector]);
-    setErrors(validate(props.selector, currentValue));
   }, [props.entityId]);
 
   const onInputChange = (
