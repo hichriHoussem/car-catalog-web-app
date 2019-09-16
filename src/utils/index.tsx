@@ -1,5 +1,6 @@
 import Car from '../interfaces/car';
 import NewCar from '../interfaces/new-car';
+import { validatorsMapper } from '../data';
 
 export function saveCarsList(cars: [Car]): void {
   localStorage.setItem('cars', JSON.stringify(cars));
@@ -65,45 +66,9 @@ export function removeCar(id: string): void {
   saveCarsList(currentCarsList.filter((c: Car) => c.id !== parseInt(id, 0)));
 }
 
-const validatorsMapper = {
-  model: {
-    isRequired: true,
-    validate: (input: string): string | null => {
-      if (!input) {
-        return 'Required field';
-      }
-      return input.length > 30 ? 'reach limit' : null;
-    },
-  },
-  manufacturer: {
-    isRequired: true,
-    validate: (input: string): string | null => {
-      if (!input) {
-        return 'Required field';
-      }
-      return input.length > 30 ? 'reach limit' : null;
-    },
-  },
-  transmission: {
-    isRequired: true,
-    validate: (input: string): string | null => {
-      if (!input) {
-        return 'Required field';
-      }
-      return input.length > 30 ? 'reach limit' : null;
-    },
-  },
-  co2: {
-    isRequired: false,
-  },
-  image: {
-    isRequired: false,
-  },
-};
-
 export function validate(
   selector: string,
-  input: string | number,
+  input: string | number | null,
   oldError: object
 ): object {
   const error = {};

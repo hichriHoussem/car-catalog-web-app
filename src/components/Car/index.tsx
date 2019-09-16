@@ -29,18 +29,11 @@ function CarInfo(props: RouteComponentProps<TParams>) {
     props.history.push('/');
   };
 
-  const editFields = (target: string, value: string): void => {};
-
   return (
     <div className="right-side">
       <div className="info">
         {Object.keys(selectedCar[0]).map((c: string) => (
-          <Field
-            editFields={editFields}
-            key={c}
-            car={selectedCar[0]}
-            selector={c}
-          />
+          <Field key={c} car={selectedCar[0]} selector={c} />
         ))}
 
         <div className="car-action">
