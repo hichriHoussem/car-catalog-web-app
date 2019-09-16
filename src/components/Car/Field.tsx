@@ -14,7 +14,7 @@ function CarInput(props: FieldDetails) {
   useEffect(() => {
     // Reset component
     setCurrentValue(getValues(props.entityId)[props.selector]);
-  }, [props.entityId]);
+  }, [props.entityId, props.selector]);
 
   const onInputChange = (
     e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
