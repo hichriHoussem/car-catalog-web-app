@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Radio from '../Radio';
 import Car from '../../interfaces/car';
 import FieldDetails from '../../interfaces/field-details';
+import NewCar from '../../interfaces/new-car';
 
 const getValidator = (selector: string) => {
   return (input: string): string => 'test';
@@ -9,8 +10,7 @@ const getValidator = (selector: string) => {
 
 const getValues = (entityId?: string): Car => {
   const oldLostString = localStorage.getItem('cars') || '';
-
-  const oldList = JSON.parse(oldLostString);
+  const oldList = oldLostString ? JSON.parse(oldLostString) : [];
 
   return !!entityId
     ? oldList.filter((c: Car) => c.id === parseInt(entityId, 0))[0]
@@ -18,31 +18,40 @@ const getValues = (entityId?: string): Car => {
         model: '',
         manufacturer: '',
         transmission: '',
-        co2: '',
+        co2: 0,
         image: '',
       };
 };
 
 function CarInput(props: FieldDetails) {
+  const [currentValue, setCurrentValue] = useState<string | null>(null);
   const savedValues = getValues(props.entityId);
 
   const onInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const newValue = e.currentTarget.value;
     props.editFields(props.selector, e.currentTarget.value);
+    setCurrentValue(e.currentTarget.value);
   };
 
   const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     props.editFields(props.selector, e.target.value);
+    setCurrentValue(e.currentTarget.value);
   };
 
   let inputType = (
-    <input value={savedValues[props.selector]} onChange={onInputChange} />
+    <input
+      value={currentValue || savedValues[props.selector]}
+      onChange={onInputChange}
+    />
   );
   let validator = getValidator(props.selector);
 
   if (props.selector === 'transmission') {
     inputType = (
-      <Radio value={savedValues[props.selector]} onChange={onRadioChange} />
+      <Radio
+        value={currentValue || savedValues[props.selector]}
+        onChange={onRadioChange}
+      />
     );
   }
   if (props.selector === 'image') {

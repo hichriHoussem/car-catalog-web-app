@@ -9,6 +9,7 @@ const Form: React.FC = (props: RouteComponentProps) => {
 
   const handleAdd = (): void => {
     const { newId, newList } = getNewList(values);
+
     localStorage.setItem('cars', JSON.stringify(newList));
     props.history.push(`/car/${newId}`);
   };
