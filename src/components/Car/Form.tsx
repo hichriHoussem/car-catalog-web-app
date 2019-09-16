@@ -8,7 +8,8 @@ const Form: React.FC = (props: RouteComponentProps) => {
   const [values, setValues] = useState<NewCar>({});
 
   const handleAdd = (): void => {
-    const { newId, newList } = getNewList(values);
+    const { newId, newList } = getNewList(values, props.match.params.id);
+
     saveCarsList(newList);
     props.history.push(`/car/${newId}`);
   };
@@ -37,7 +38,9 @@ const Form: React.FC = (props: RouteComponentProps) => {
           )
         )}
         <div className="car-action">
-          <button onClick={handleAdd}>Add a car</button>
+          <button onClick={handleAdd}>
+            {props.match.params.id ? 'Save' : 'Add'}
+          </button>
           <button onClick={handleCancel}>Cancel</button>
         </div>
       </div>

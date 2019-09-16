@@ -13,7 +13,7 @@ export function saveCarsList(cars: [Car]): void {
   localStorage.setItem('cars', JSON.stringify(cars));
 }
 
-export function getNewList(values: NewCar): any {
+export function getNewList(values: NewCar, currentId: string): any {
   const oldCarsString = localStorage.getItem('cars');
   if (!oldCarsString) {
     return {
@@ -30,16 +30,34 @@ export function getNewList(values: NewCar): any {
   const idList = oldCars.map((c: NewCar) => c.id);
   const newElementId = Math.max(...idList) + 1;
 
-  return {
-    newId: newElementId,
-    newList: [
-      ...oldCars,
-      {
-        id: newElementId,
-        ...values,
-      },
-    ],
-  };
+  if (currentId) {
+    const newList = oldCars.map((c: Car) => {
+      if (c.id === parseInt(currentId, 0)) {
+        return {
+          id: currentId,
+          ...c,
+          ...values,
+        };
+      } else {
+        return c;
+      }
+    });
+    return {
+      newId: currentId,
+      newList,
+    };
+  } else {
+    return {
+      newId: newElementId,
+      newList: [
+        ...oldCars,
+        {
+          id: newElementId,
+          ...values,
+        },
+      ],
+    };
+  }
 }
 
 export function getCurrentCars(): any {
