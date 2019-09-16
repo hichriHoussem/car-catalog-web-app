@@ -3,7 +3,7 @@ import Radio from '../Radio';
 import Car from '../../interfaces/car';
 import FieldDetails from '../../interfaces/field-details';
 import NewCar from '../../interfaces/new-car';
-import { validate } from '../../utils';
+import { validate, checkErrors } from '../../utils';
 
 const getValues = (entityId?: string): Car => {
   const oldLostString = localStorage.getItem('cars') || '';
@@ -27,13 +27,17 @@ function CarInput(props: FieldDetails) {
 
   const onInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const newValue = e.currentTarget.value;
-    props.editFields(props.selector, e.currentTarget.value);
+    props.editFields(
+      props.selector,
+      e.currentTarget.value,
+      checkErrors(errors)
+    );
     setCurrentValue(e.currentTarget.value);
     setErrors(validate(props.selector, e.currentTarget.value, errors));
   };
 
   const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    props.editFields(props.selector, e.target.value);
+    props.editFields(props.selector, e.target.value, checkErrors(errors));
     setCurrentValue(e.currentTarget.value);
     setErrors(validate(props.selector, e.currentTarget.value, errors));
   };

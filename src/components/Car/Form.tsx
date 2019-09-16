@@ -6,23 +6,37 @@ import NewCar from '../../interfaces/new-car';
 
 const Form: React.FC = (props: RouteComponentProps) => {
   const [values, setValues] = useState<NewCar>({});
+  const [errors, setErrors] = useState<boolean>(false);
+  const [displayWarning, setDisplayWarning] = useState<boolean>(false);
 
   const handleAdd = (): void => {
-    const { newId, newList } = getNewList(values, props.match.params.id);
+    if (!errors) {
+      const { newId, newList } = getNewList(values, props.match.params.id);
 
-    saveCarsList(newList);
-    props.history.push(`/car/${newId}`);
+      saveCarsList(newList);
+      props.history.push(`/car/${newId}`);
+    } else {
+      setDisplayWarning(true);
+    }
   };
 
   const handleCancel = (): void => {
     props.history.push('/');
   };
 
-  const editFields = (target: string, value: string): void => {
+  const editFields = (
+    target: string,
+    value: string,
+    isErrors: boolean
+  ): void => {
     setValues({
       ...values,
       [target]: value,
     });
+    setErrors(isErrors);
+    if (!isErrors) {
+      setDisplayWarning(false);
+    }
   };
   return (
     <div className="right-side">
@@ -43,6 +57,11 @@ const Form: React.FC = (props: RouteComponentProps) => {
           </button>
           <button onClick={handleCancel}>Cancel</button>
         </div>
+        {displayWarning && (
+          <div className="warning-messages">
+            You need to fix the above errors first
+          </div>
+        )}
       </div>
     </div>
   );

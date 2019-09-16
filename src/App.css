@@ -123,7 +123,8 @@
   background-color: #c7c7c7;
   color: #2d2d2d;
 }
-.error-message {
+.error-message,
+.warning-messages {
   color: #f00;
   text-align: left;
 }

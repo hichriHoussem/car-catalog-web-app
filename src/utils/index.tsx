@@ -67,8 +67,37 @@ export function removeCar(id: string): void {
 
 const validatorsMapper = {
   model: {
-    validate: (input: string): string | null =>
-      input.length > 2 ? 'reach limit' : null,
+    isRequired: true,
+    validate: (input: string): string | null => {
+      if (!input) {
+        return 'Required field';
+      }
+      return input.length > 30 ? 'reach limit' : null;
+    },
+  },
+  manufacturer: {
+    isRequired: true,
+    validate: (input: string): string | null => {
+      if (!input) {
+        return 'Required field';
+      }
+      return input.length > 30 ? 'reach limit' : null;
+    },
+  },
+  transmission: {
+    isRequired: true,
+    validate: (input: string): string | null => {
+      if (!input) {
+        return 'Required field';
+      }
+      return input.length > 30 ? 'reach limit' : null;
+    },
+  },
+  co2: {
+    isRequired: false,
+  },
+  image: {
+    isRequired: false,
   },
 };
 
@@ -78,7 +107,10 @@ export function validate(
   oldError: object
 ): object {
   const error = {};
-  const result = validatorsMapper[selector].validate(input);
+  const selectedValidator = validatorsMapper[selector];
+  const result = selectedValidator.isRequired
+    ? selectedValidator.validate(input)
+    : null;
   if (result) {
     error[selector] = result;
   } else {
@@ -91,4 +123,8 @@ export function validate(
     ...oldError,
     ...error,
   };
+}
+
+export function checkErrors(errors: object): boolean {
+  return !!Object.keys(errors).filter((c: string) => !!errors[c]).length;
 }
