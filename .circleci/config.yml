@@ -22,11 +22,12 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v1-deps-{ .Branch }-{ checksum "package.json" }
+            - v1-deps-{ .Branch }
+            - v1-deps
 
-      - run: yarn install
+      - run:
+          - npm ci
 
       - save_cache:
           paths:
@@ -48,3 +49,9 @@ jobs:
       - run:
           name: Deploy to Netlify
           command: yarn netlify:deploy
+
+      - save_cache:
+          key: v1-deps-{ .Branch }-{ checksum "package.json" }
+          paths:
+            - ~/.cache
+            - ~/.npm
