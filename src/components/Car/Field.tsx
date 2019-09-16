@@ -3,10 +3,7 @@ import Radio from '../Radio';
 import Car from '../../interfaces/car';
 import FieldDetails from '../../interfaces/field-details';
 import NewCar from '../../interfaces/new-car';
-
-const getValidator = (selector: string) => {
-  return (input: string): string => 'test';
-};
+import { validate } from '../../utils';
 
 const getValues = (entityId?: string): Car => {
   const oldLostString = localStorage.getItem('cars') || '';
@@ -25,17 +22,20 @@ const getValues = (entityId?: string): Car => {
 
 function CarInput(props: FieldDetails) {
   const [currentValue, setCurrentValue] = useState<string | null>(null);
+  const [errors, setErrors] = useState<object>({});
   const savedValues = getValues(props.entityId);
 
   const onInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const newValue = e.currentTarget.value;
     props.editFields(props.selector, e.currentTarget.value);
     setCurrentValue(e.currentTarget.value);
+    setErrors(validate(props.selector, e.currentTarget.value, errors));
   };
 
   const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     props.editFields(props.selector, e.target.value);
     setCurrentValue(e.currentTarget.value);
+    setErrors(validate(props.selector, e.currentTarget.value, errors));
   };
 
   let inputType = (
@@ -44,7 +44,6 @@ function CarInput(props: FieldDetails) {
       onChange={onInputChange}
     />
   );
-  let validator = getValidator(props.selector);
 
   if (props.selector === 'transmission') {
     inputType = (
@@ -62,7 +61,12 @@ function CarInput(props: FieldDetails) {
     <div className="car-field">
       <label className="field-label">{props.selector}</label>
       <span>:</span>
-      {inputType}
+      <div>
+        {inputType}
+        {errors[props.selector] && (
+          <div className="error-message">{errors[props.selector]}</div>
+        )}
+      </div>
     </div>
   );
 }

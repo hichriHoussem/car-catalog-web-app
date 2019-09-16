@@ -64,3 +64,31 @@ export function removeCar(id: string): void {
   const currentCarsList = getCurrentCars();
   saveCarsList(currentCarsList.filter((c: Car) => c.id !== parseInt(id, 0)));
 }
+
+const validatorsMapper = {
+  model: {
+    validate: (input: string): string | null =>
+      input.length > 2 ? 'reach limit' : null,
+  },
+};
+
+export function validate(
+  selector: string,
+  input: string | number,
+  oldError: object
+): object {
+  const error = {};
+  const result = validatorsMapper[selector].validate(input);
+  if (result) {
+    error[selector] = result;
+  } else {
+    return {
+      ...oldError,
+      [selector]: null,
+    };
+  }
+  return {
+    ...oldError,
+    ...error,
+  };
+}
