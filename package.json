@@ -22,6 +22,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:ci": "start-server-and-test start http://localhost:3000 cy:run",
+    "cy:clear": "cypress cache clear",
     "netlify:deploy": "netlify deploy --dir=./build -p -m \"$(git log -1 --pretty=%B)\""
   },
   "eslintConfig": {

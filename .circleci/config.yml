@@ -34,6 +34,10 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
+          name: clear cypress cache
+          command: yarn cy:clear
+
+      - run:
           name: Running ETE tests
           command: yarn cy:ci
 
