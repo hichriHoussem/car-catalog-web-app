@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Field from './Field';
 import { RouteComponentProps } from 'react-router-dom';
-import { getNewList } from '../../utils';
+import { getNewList, saveCarsList } from '../../utils';
 import NewCar from '../../interfaces/new-car';
 
 const Form: React.FC = (props: RouteComponentProps) => {
@@ -9,8 +9,7 @@ const Form: React.FC = (props: RouteComponentProps) => {
 
   const handleAdd = (): void => {
     const { newId, newList } = getNewList(values);
-
-    localStorage.setItem('cars', JSON.stringify(newList));
+    saveCarsList(newList);
     props.history.push(`/car/${newId}`);
   };
 

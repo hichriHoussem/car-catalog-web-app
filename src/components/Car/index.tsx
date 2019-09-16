@@ -2,7 +2,7 @@ import React, { MouseEvent, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import EmptyList from './EmptyList';
 import Field from './Field';
-import { getCurrentCars } from '../../utils';
+import { getCurrentCars, removeCar } from '../../utils';
 import Car from '../../interfaces/car';
 
 interface TParams {
@@ -25,6 +25,7 @@ function CarInfo(props: RouteComponentProps<TParams>) {
   };
 
   const handleRemove = (): void => {
+    removeCar(selectedCar[0].id);
     props.history.push('/');
   };
 
