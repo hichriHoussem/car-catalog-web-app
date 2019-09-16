@@ -1,4 +1,5 @@
 interface NewCar {
+  id?: number;
   model?: string;
   manufacturer?: string;
   transmission?: string;
