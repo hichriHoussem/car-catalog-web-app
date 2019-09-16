@@ -22,21 +22,20 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-deps-{ .Branch }-{ checksum "package.json" }
-            - v1-deps-{ .Branch }
-            - v1-deps
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: yarn install
 
       - save_cache:
           paths:
-            - ~/.cache
-            - ~/.npm
-          key: v1-deps-{ .Branch }-{ checksum "package.json" }
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: clear cypress cache
-          command: yarn cy:clear
+          name: Install Cypress
+          command: cypress install
 
       - run:
           name: Running ETE tests
