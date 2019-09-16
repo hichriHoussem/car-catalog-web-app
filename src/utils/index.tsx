@@ -93,3 +93,18 @@ export function validate(
 export function checkErrors(errors: object): boolean {
   return !!Object.keys(errors).filter((c: string) => !!errors[c]).length;
 }
+
+export const getValues = (entityId?: string): Car => {
+  const oldLostString = localStorage.getItem('cars') || '';
+  const oldList = oldLostString ? JSON.parse(oldLostString) : [];
+
+  return !!entityId
+    ? oldList.filter((c: Car) => c.id === parseInt(entityId, 0))[0]
+    : {
+        model: '',
+        manufacturer: '',
+        transmission: 'automatic',
+        co2: '',
+        image: '',
+      };
+};

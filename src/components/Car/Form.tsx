@@ -43,9 +43,11 @@ const Form: React.FC = (props: RouteComponentProps) => {
     isErrors: boolean
   ): void => {
     setValues({
+      transmission: 'automatic', // default
       ...values,
       [target]: value,
     });
+
     setErrors(isErrors);
   };
   return (

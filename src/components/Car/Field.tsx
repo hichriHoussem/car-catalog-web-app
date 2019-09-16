@@ -1,24 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Radio from '../Radio';
-import Car from '../../interfaces/car';
 import FieldDetails from '../../interfaces/field-details';
-import NewCar from '../../interfaces/new-car';
-import { validate, checkErrors } from '../../utils';
-
-const getValues = (entityId?: string): Car => {
-  const oldLostString = localStorage.getItem('cars') || '';
-  const oldList = oldLostString ? JSON.parse(oldLostString) : [];
-
-  return !!entityId
-    ? oldList.filter((c: Car) => c.id === parseInt(entityId, 0))[0]
-    : {
-        model: '',
-        manufacturer: '',
-        transmission: '',
-        co2: 0,
-        image: '',
-      };
-};
+import { validate, checkErrors, getValues } from '../../utils';
 
 function CarInput(props: FieldDetails) {
   const [currentValue, setCurrentValue] = useState<string | null>(

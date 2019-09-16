@@ -13,7 +13,7 @@ function Radio(props: RadioInput) {
           <input
             type="radio"
             value="automatic"
-            checked={true}
+            checked={props.value === 'automatic'}
             onChange={props.onChange}
           />
           Automatic
@@ -24,7 +24,7 @@ function Radio(props: RadioInput) {
           <input
             type="radio"
             value="manual"
-            checked={false}
+            checked={props.value === 'manual'}
             onChange={props.onChange}
           />
           Manual
