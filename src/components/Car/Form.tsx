@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import Field from './Field';
 import { RouteComponentProps } from 'react-router-dom';
 import { getNewList } from '../../utils';
-
-interface NewCar {
-  model?: string;
-  manufacturer?: string;
-  transmission?: string;
-  co2?: number;
-  image?: string;
-}
+import NewCar from '../../interfaces/new-car';
 
 const Form: React.FC = (props: RouteComponentProps) => {
   const [values, setValues] = useState<NewCar>({});

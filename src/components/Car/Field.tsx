@@ -1,33 +1,19 @@
 import React from 'react';
 import Radio from '../Radio';
-
-interface CarType {
-  id: number;
-  model: string;
-  manufacturer: string;
-  transmission: string;
-  co2: number;
-  image: string;
-}
-
-interface FieldDetails {
-  car?: CarType;
-  selector: string;
-  entityId?: string;
-  editFields: (target: string, value: string) => void;
-}
+import Car from '../../interfaces/car';
+import FieldDetails from '../../interfaces/field-details';
 
 const getValidator = (selector: string) => {
   return (input: string): string => 'test';
 };
 
-const getValues = (entityId?: string): CarType => {
+const getValues = (entityId?: string): Car => {
   const oldLostString = localStorage.getItem('cars') || '';
 
   const oldList = JSON.parse(oldLostString);
 
   return !!entityId
-    ? oldList.filter((c: CarType) => c.id === parseInt(entityId, 0))[0]
+    ? oldList.filter((c: Car) => c.id === parseInt(entityId, 0))[0]
     : {
         model: '',
         manufacturer: '',

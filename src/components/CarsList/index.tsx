@@ -1,15 +1,7 @@
 import React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { getCurrentCars } from '../../utils';
-
-interface Cars {
-  id: number;
-  model: string;
-  manufacturer: string;
-  transmission: string;
-  coTwo: number;
-  image: string;
-}
+import Car from '../../interfaces/car';
 
 function CarList(props: RouteComponentProps) {
   const changeMode = (): void => {
@@ -25,7 +17,7 @@ function CarList(props: RouteComponentProps) {
       </div>
       <nav>
         <ul>
-          {carsList.map((cl: Cars) => (
+          {carsList.map((cl: Car) => (
             <Link key={`car-link-${cl.id}`} to={`/car/${cl.id}`}>
               <li>{cl.model}</li>
             </Link>
