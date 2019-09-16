@@ -28,25 +28,24 @@ function CarInfo(props: RouteComponentProps<TParams>) {
     props.history.push('/');
   };
 
-  const changeMode = (): void => {};
-
   const editFields = (target: string, value: string): void => {};
 
   return (
-    <div className="right-side form">
-      <button onClick={changeMode}>Add a car</button>
-      {Object.keys(selectedCar[0]).map((c: string) => (
-        <Field
-          editFields={editFields}
-          key={c}
-          car={selectedCar[0]}
-          selector={c}
-        />
-      ))}
+    <div className="right-side">
+      <div className="info">
+        {Object.keys(selectedCar[0]).map((c: string) => (
+          <Field
+            editFields={editFields}
+            key={c}
+            car={selectedCar[0]}
+            selector={c}
+          />
+        ))}
 
-      <div className="car-action">
-        <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleRemove}>Remove</button>
+        <div className="car-action">
+          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleRemove}>Remove</button>
+        </div>
       </div>
     </div>
   );

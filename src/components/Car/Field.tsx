@@ -63,8 +63,9 @@ function Field(props: FieldDetails) {
     return <CarInput {...props} />;
   }
   return (
-    <div>
-      <span>{props.selector}</span>
+    <div className="info-line">
+      <div className="label">{props.selector}</div>
+      <span>:</span>
       {props.car[props.selector]}
     </div>
   );

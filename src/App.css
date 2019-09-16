@@ -45,12 +45,14 @@
   height: 100vh;
   background-color: #00bcd4;
 }
-.right-side > .form {
+.right-side > .form,
+.right-side > .info {
   margin: 0 auto;
   width: 317px;
   position: relative;
   top: 35%;
 }
+
 .right-side > .form > .car-action {
   margin-top: 20px;
 }
@@ -62,17 +64,22 @@
   text-align: center;
   height: 100vh;
 }
-.car-field {
+.car-field,
+.info-line {
   display: flex;
+  margin-bottom: 5px;
 }
-.car-field > .field-label {
+
+.car-field > .field-label,
+.info-line > .label {
   min-width: 120px;
   text-align: left;
   text-transform: capitalize;
   font-size: 19px;
   font-weight: 400;
 }
-.car-field > span {
+.car-field > span,
+.info-line span {
   margin-right: 10px;
 }
 .field-input > .radio {
