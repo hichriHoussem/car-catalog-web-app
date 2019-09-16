@@ -10,6 +10,11 @@ const Form: React.FC = (props: RouteComponentProps) => {
   const [errors, setErrors] = useState<boolean>(false);
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
 
+  useEffect(() => {
+    // Reset component
+    setDisplayErrors(false);
+  }, [props.match.params.id]);
+
   const handleAdd = (): void => {
     let requirementError = false;
     Object.keys(validatorsMapper).forEach((v: string) => {
@@ -17,11 +22,6 @@ const Form: React.FC = (props: RouteComponentProps) => {
         requirementError = true;
       }
     });
-
-    useEffect(() => {
-      // Reset component
-      setDisplayErrors(false);
-    }, [props.match.params.id]);
 
     if (!errors && !requirementError) {
       const { newId, newList } = getNewList(values, props.match.params.id);
