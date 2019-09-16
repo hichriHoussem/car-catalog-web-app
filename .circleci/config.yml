@@ -26,13 +26,13 @@ jobs:
             - v1-deps-{ .Branch }
             - v1-deps
 
-      - run:
-          - npm ci
+      - run: npm ci
 
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - ~/.cache
+            - ~/.npm
+          key: v1-deps-{ .Branch }-{ checksum "package.json" }
 
       - run:
           name: clear cypress cache
@@ -49,9 +49,3 @@ jobs:
       - run:
           name: Deploy to Netlify
           command: yarn netlify:deploy
-
-      - save_cache:
-          key: v1-deps-{ .Branch }-{ checksum "package.json" }
-          paths:
-            - ~/.cache
-            - ~/.npm
