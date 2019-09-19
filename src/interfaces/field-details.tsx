@@ -1,6 +1,7 @@
 import Car from './car';
 
 interface FieldDetails {
+  isEdit?: boolean;
   displayErrors?: boolean;
   car?: Car;
   selector: string;

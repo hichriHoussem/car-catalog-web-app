@@ -5,7 +5,7 @@ import { getNewList, saveCarsList } from '../../utils';
 import NewCar from '../../interfaces/new-car';
 import { validatorsMapper } from '../../data';
 
-const Form: React.FC = (props: RouteComponentProps) => {
+const CarForm: React.FC = (props: RouteComponentProps) => {
   const [values, setValues] = useState<NewCar>({});
   const [errors, setErrors] = useState<object>({});
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
@@ -65,6 +65,7 @@ const Form: React.FC = (props: RouteComponentProps) => {
         {['model', 'manufacturer', 'transmission', 'co2', 'image'].map(
           (c: string) => (
             <Field
+              isEdit={!!props.match.params.id}
               displayErrors={displayErrors}
               editFields={editFields}
               entityId={props.match.params.id}
@@ -89,4 +90,4 @@ const Form: React.FC = (props: RouteComponentProps) => {
   );
 };
 
-export default Form;
+export default CarForm;
