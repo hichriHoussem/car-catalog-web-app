@@ -1,56 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import Radio from '../Radio';
 import FieldDetails from '../../interfaces/field-details';
 import IInfoLine from '../../interfaces/info-line';
 import { validate, getValues } from '../../utils';
 
-export function CarInput(props: FieldDetails) {
-  const { entityId, selector, editFields, displayErrors } = props;
-  const [currentValue, setCurrentValue] = useState<string | null>(
-    getValues(entityId)[selector]
-  );
-  const [errors, setErrors] = useState<object>(
-    validate(selector, currentValue)
-  );
+interface IState {
+  value?: string;
+  error?: object;
+}
 
-  useEffect(() => {
-    // Reset component
-    setCurrentValue(getValues(entityId)[selector]);
-  }, [entityId, selector]);
+export class CarInput extends Component<FieldDetails, IState> {
+  constructor(props: FieldDetails) {
+    super(props);
 
-  const onInputChange = (
+    this.state = {
+      value: getValues(props.entityId)[props.selector],
+      error: validate(
+        props.selector,
+        getValues(props.entityId)[props.selector]
+      ),
+    };
+  }
+
+  componentWillReceiveProps = (nextProps: FieldDetails): void => {
+    const { entityId, selector } = this.props;
+    if (entityId !== nextProps.entityId || selector !== nextProps.selector) {
+      this.setState({
+        value: getValues(nextProps.entityId)[nextProps.selector],
+      });
+    }
+  };
+  onInputChange = (
     e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
   ): void => {
+    const { selector, editFields } = this.props;
+
     const newValue = e.currentTarget.value;
-    setCurrentValue(newValue || '');
+    this.setState({ value: newValue || '' });
     const er = validate(selector, newValue);
-    setErrors(er);
+    this.setState({ error: er });
+
     if (editFields) {
       editFields(selector, newValue, er[selector]);
     }
   };
 
-  let inputType = <input value={currentValue || ''} onChange={onInputChange} />;
+  render() {
+    const { selector, displayErrors, errors } = this.props;
 
-  if (selector === 'transmission') {
-    inputType = <Radio value={currentValue || ''} onChange={onInputChange} />;
-  }
-  if (selector === 'image') {
-    // inputType = <Radio onChange={onRadioChange} />;
-  }
+    let inputType = (
+      <input value={this.state.value || ''} onChange={this.onInputChange} />
+    );
 
-  return (
-    <div className="car-field">
-      <label className="field-label">{selector}</label>
-      <span>:</span>
-      <div>
-        {inputType}
-        {errors[selector] && displayErrors && (
-          <div className="error-message">{errors[selector]}</div>
-        )}
+    if (selector === 'transmission') {
+      inputType = (
+        <Radio value={this.state.value || ''} onChange={this.onInputChange} />
+      );
+    }
+    if (selector === 'image') {
+      // inputType = <Radio onChange={onRadioChange} />;
+    }
+
+    return (
+      <div className="car-field">
+        <label className="field-label">{selector}</label>
+        <span>:</span>
+        <div>
+          {inputType}
+          {errors && [selector] && displayErrors && (
+            <div className="error-message">{errors[selector]}</div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export function InfoLine(props: IInfoLine) {

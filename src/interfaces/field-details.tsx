@@ -6,6 +6,7 @@ interface FieldDetails {
   car?: Car;
   selector: string;
   entityId?: string;
+  errors?: boolean;
   editFields?: (
     target: string,
     value: string | number,
