@@ -4,47 +4,48 @@ import FieldDetails from '../../interfaces/field-details';
 import { validate, getValues } from '../../utils';
 
 function CarInput(props: FieldDetails) {
+  const { entityId, selector, editFields, displayErrors } = props;
   const [currentValue, setCurrentValue] = useState<string | null>(
-    getValues(props.entityId)[props.selector]
+    getValues(entityId)[selector]
   );
   const [errors, setErrors] = useState<object>(
-    validate(props.selector, currentValue)
+    validate(selector, currentValue)
   );
 
   useEffect(() => {
     // Reset component
-    setCurrentValue(getValues(props.entityId)[props.selector]);
-  }, [props.entityId, props.selector]);
+    setCurrentValue(getValues(entityId)[selector]);
+  }, [entityId, selector]);
 
   const onInputChange = (
     e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newValue = e.currentTarget.value;
     setCurrentValue(newValue || '');
-    const er = validate(props.selector, newValue);
+    const er = validate(selector, newValue);
     setErrors(er);
-    if (props.editFields) {
-      props.editFields(props.selector, newValue, er[props.selector]);
+    if (editFields) {
+      editFields(selector, newValue, er[selector]);
     }
   };
 
   let inputType = <input value={currentValue || ''} onChange={onInputChange} />;
 
-  if (props.selector === 'transmission') {
+  if (selector === 'transmission') {
     inputType = <Radio value={currentValue || ''} onChange={onInputChange} />;
   }
-  if (props.selector === 'image') {
+  if (selector === 'image') {
     // inputType = <Radio onChange={onRadioChange} />;
   }
 
   return (
     <div className="car-field">
-      <label className="field-label">{props.selector}</label>
+      <label className="field-label">{selector}</label>
       <span>:</span>
       <div>
         {inputType}
-        {errors[props.selector] && props.displayErrors && (
-          <div className="error-message">{errors[props.selector]}</div>
+        {errors[selector] && displayErrors && (
+          <div className="error-message">{errors[selector]}</div>
         )}
       </div>
     </div>
@@ -52,14 +53,15 @@ function CarInput(props: FieldDetails) {
 }
 
 function Field(props: FieldDetails) {
-  if (!!props.entityId || !props.car) {
+  const { entityId, selector, car } = props;
+  if (!!entityId || !car) {
     return <CarInput {...props} />;
   }
   return (
     <div className="info-line">
-      <div className="label">{props.selector}</div>
+      <div className="label">{selector}</div>
       <span>:</span>
-      {props.car[props.selector]}
+      {car[selector]}
     </div>
   );
 }
