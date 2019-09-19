@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Field from './Field';
+import { CarInput } from './Field';
 import { RouteComponentProps } from 'react-router-dom';
 import { getNewList, saveCarsList } from '../../utils';
 import NewCar from '../../interfaces/new-car';
 import { validatorsMapper } from '../../data';
 
 const CarForm: React.FC = (props: RouteComponentProps) => {
+  const { match, history } = props;
+  const selectedCarId = match.params.id;
   const [values, setValues] = useState<NewCar>({});
   const [errors, setErrors] = useState<object>({});
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
@@ -13,7 +15,7 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
   useEffect(() => {
     // Reset component
     setDisplayErrors(false);
-  }, [props.match.params.id]);
+  }, [selectedCarId]);
 
   const handleAdd = (): void => {
     let requirementError = false;
@@ -31,16 +33,16 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
     });
 
     if (!hasError && !requirementError) {
-      const { newId, newList } = getNewList(values, props.match.params.id);
+      const { newId, newList } = getNewList(values, selectedCarId);
       saveCarsList(newList);
-      props.history.push(`/car/${newId}`);
+      history.push(`/car/${newId}`);
     } else {
       setDisplayErrors(true);
     }
   };
 
   const handleCancel = (): void => {
-    props.history.push('/');
+    history.push('/');
   };
 
   const editFields = (
@@ -64,20 +66,18 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
       <div className="form">
         {['model', 'manufacturer', 'transmission', 'co2', 'image'].map(
           (c: string) => (
-            <Field
-              isEdit={!!props.match.params.id}
+            <CarInput
+              isEdit={!!selectedCarId} // otherwise new car
               displayErrors={displayErrors}
               editFields={editFields}
-              entityId={props.match.params.id}
+              entityId={selectedCarId}
               key={c}
               selector={c}
             />
           )
         )}
         <div className="car-action">
-          <button onClick={handleAdd}>
-            {props.match.params.id ? 'Save' : 'Add'}
-          </button>
+          <button onClick={handleAdd}>{selectedCarId ? 'Save' : 'Add'}</button>
           <button onClick={handleCancel}>Cancel</button>
         </div>
         {displayErrors && (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import EmptyList from './EmptyList';
-import Field from './Field';
+import { InfoLine } from './Field';
 import { getCurrentCars, removeCar } from '../../utils';
 import Car from '../../interfaces/car';
 
@@ -33,7 +33,7 @@ function CarInfo(props: RouteComponentProps<TParams>) {
     <div className="right-side">
       <div className="info">
         {Object.keys(selectedCar[0]).map((c: string) => (
-          <Field key={c} car={selectedCar[0]} selector={c} />
+          <InfoLine key={c} car={selectedCar[0]} selector={c} />
         ))}
 
         <div className="car-action">

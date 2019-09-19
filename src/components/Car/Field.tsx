@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Radio from '../Radio';
 import FieldDetails from '../../interfaces/field-details';
+import IInfoLine from '../../interfaces/info-line';
 import { validate, getValues } from '../../utils';
 
-function CarInput(props: FieldDetails) {
+export function CarInput(props: FieldDetails) {
   const { entityId, selector, editFields, displayErrors } = props;
   const [currentValue, setCurrentValue] = useState<string | null>(
     getValues(entityId)[selector]
@@ -52,11 +53,8 @@ function CarInput(props: FieldDetails) {
   );
 }
 
-function Field(props: FieldDetails) {
-  const { entityId, selector, car } = props;
-  if (!!entityId || !car) {
-    return <CarInput {...props} />;
-  }
+export function InfoLine(props: IInfoLine) {
+  const { selector, car } = props;
   return (
     <div className="info-line">
       <div className="label">{selector}</div>
@@ -65,5 +63,3 @@ function Field(props: FieldDetails) {
     </div>
   );
 }
-
-export default Field;
