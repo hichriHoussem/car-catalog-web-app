@@ -10,7 +10,13 @@ export class CarInput extends Component<FieldDetails> {
   render() {
     const { selector, displayErrors, error, value } = this.props;
 
-    let inputType = <input value={value || ''} onChange={this.onInputChange} />;
+    let inputType = (
+      <input
+        className={selector}
+        value={value || ''}
+        onChange={this.onInputChange}
+      />
+    );
 
     if (selector === 'transmission') {
       inputType = <Radio value={value || ''} onChange={this.onInputChange} />;
