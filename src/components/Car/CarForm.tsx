@@ -21,6 +21,8 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
   const [errors, setErrors] = useState<object>({});
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
 
+  const IsError = isErrorExist(errors);
+
   useEffect(() => {
     // Reset component
     const lastValues = isEdit ? getValuesFor(selectedCarId) : initValues();
@@ -29,26 +31,12 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
   }, [selectedCarId, isEdit]);
 
   const handleAdd = (): void => {
-    let requirementError = false;
-    let hasError = false;
-    Object.keys(model).forEach((v: string) => {
-      if (model[v].isRequired && !values[v]) {
-        requirementError = true;
-      }
-    });
-
-    Object.keys(errors).forEach((e: string) => {
-      if (errors[e]) {
-        hasError = true;
-      }
-    });
-
-    if (!hasError && !requirementError) {
+    if (IsError) {
+      setDisplayErrors(true);
+    } else {
       const { newId, newList } = getNewList(values, selectedCarId);
       saveCarsList(newList);
       history.push(`/car/${newId}`);
-    } else {
-      setDisplayErrors(true);
     }
   };
 
@@ -72,8 +60,6 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
       [selector]: newError,
     });
   };
-
-  const IsError = isErrorExist(errors);
 
   return (
     <div className="right-side">
