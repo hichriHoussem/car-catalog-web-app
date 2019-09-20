@@ -21,16 +21,12 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
   const [errors, setErrors] = useState<object>({});
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
 
-  const resetComponent = (): void => {
+  useEffect(() => {
+    // Reset component
     const lastValues = isEdit ? getValuesFor(selectedCarId) : initValues();
     setValues(lastValues);
     setErrors(initErrors(lastValues));
-  };
-
-  useEffect(() => {
-    // Reset component
-    resetComponent();
-  }, [selectedCarId]);
+  }, [selectedCarId, isEdit]);
 
   const handleAdd = (): void => {
     let requirementError = false;
