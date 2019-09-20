@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { CarInput } from './Field';
 import { RouteComponentProps } from 'react-router-dom';
+import { getNewList, saveCarsList } from '../../db/backend';
+import NewCar from '../../interfaces/new-car';
 import {
-  getNewList,
-  saveCarsList,
   validate,
   isErrorExist,
   getValuesFor,
   initErrors,
   initValues,
 } from '../../utils';
-import NewCar from '../../interfaces/new-car';
 
 const CarForm: React.FC = (props: RouteComponentProps) => {
   const { match, history } = props;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { getCurrentCars } from '../../utils';
+import { getCurrentCars } from '../../db/backend';
 import Car from '../../interfaces/car';
 
 function CarList(props: RouteComponentProps) {

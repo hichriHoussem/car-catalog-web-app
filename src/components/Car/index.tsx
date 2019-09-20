@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import EmptyList from './EmptyList';
 import { InfoLine } from './Field';
-import { getCurrentCars, removeCar } from '../../utils';
+import { getCurrentCars, removeCar } from '../../db/backend';
 import Car from '../../interfaces/car';
 
 interface TParams {
