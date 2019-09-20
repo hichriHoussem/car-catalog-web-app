@@ -62,4 +62,8 @@ On every commit an End-To-End test will run via cypress to check the main app fe
 Then, on the build step a lint test will check and fail the test even for a warning.
 Finally, the built will be deployed to netfily using few access vars defined under the CircleCI ENV-DEV.
 
+
 By default netlify will deploy all master commits, we disabled that by making netlify listen only for commits under different branch `auto-deploy-branch`, the last deployed version will be only the ones pushed from circleCI.
+
+[site](https://priceless-saha-574ba4.netlify.com)
+
