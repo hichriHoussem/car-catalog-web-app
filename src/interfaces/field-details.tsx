@@ -6,11 +6,11 @@ interface FieldDetails {
   car?: Car;
   selector: string;
   entityId?: string;
-  errors?: boolean;
-  editFields?: (
-    target: string,
-    value: string | number,
-    isErrors: boolean
+  error: boolean;
+  value: string;
+  onChange: (
+    e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>,
+    selector: string
   ) => void;
 }
 

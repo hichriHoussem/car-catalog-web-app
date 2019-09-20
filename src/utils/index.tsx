@@ -1,6 +1,6 @@
 import Car from '../interfaces/car';
 import NewCar from '../interfaces/new-car';
-import { validatorsMapper } from '../data';
+import { model } from '../data';
 
 export function saveCarsList(cars: [Car]): void {
   localStorage.setItem('cars', JSON.stringify(cars));
@@ -70,13 +70,11 @@ export function validate(
   selector: string,
   input: string | number | null
 ): object {
-  const selectedValidator = validatorsMapper[selector];
-  return {
-    [selector]: selectedValidator.validate(input),
-  };
+  const selectedValidator = model[selector];
+  return selectedValidator.validate(input);
 }
 
-export const getValues = (entityId?: string): Car => {
+export const getValuesFor = (entityId?: string): Car => {
   const oldLostString = localStorage.getItem('cars') || '';
   const oldList = oldLostString ? JSON.parse(oldLostString) : [];
 
@@ -89,4 +87,27 @@ export const getValues = (entityId?: string): Car => {
         co2: '',
         image: '',
       };
+};
+
+export const isErrorExist = (errors: object): boolean => {
+  return errors
+    ? !!Object.keys(errors).filter((e: string) => !!errors[e]).length
+    : false;
+};
+
+export const initErrors = (values: object): object => {
+  const result = {};
+  Object.keys(model).forEach((v: string) => {
+    result[v] = validate(v, values[v]);
+  });
+
+  return result;
+};
+
+export const initValues = (): object => {
+  const result = {};
+  Object.keys(model).forEach((v: string) => {
+    result[v] = '';
+  });
+  return result;
 };

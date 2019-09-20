@@ -1,4 +1,4 @@
-const validatorsMapper = {
+const model = {
   model: {
     isRequired: true,
     validate: (input: string): string | null => {
@@ -37,4 +37,4 @@ const validatorsMapper = {
   },
 };
 
-export { validatorsMapper };
+export { model };

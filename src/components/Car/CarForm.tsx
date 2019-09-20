@@ -1,27 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { CarInput } from './Field';
 import { RouteComponentProps } from 'react-router-dom';
-import { getNewList, saveCarsList } from '../../utils';
+import {
+  getNewList,
+  saveCarsList,
+  validate,
+  isErrorExist,
+  getValuesFor,
+  initErrors,
+  initValues,
+} from '../../utils';
 import NewCar from '../../interfaces/new-car';
-import { validatorsMapper } from '../../data';
+import { model } from '../../data';
 
 const CarForm: React.FC = (props: RouteComponentProps) => {
   const { match, history } = props;
   const selectedCarId = match.params.id;
+  const isEdit = !!selectedCarId;
   const [values, setValues] = useState<NewCar>({});
   const [errors, setErrors] = useState<object>({});
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
 
+  const resetComponent = (): void => {
+    const lastValues = isEdit ? getValuesFor(selectedCarId) : initValues();
+    setValues(lastValues);
+    setErrors(initErrors(lastValues));
+  };
+
   useEffect(() => {
     // Reset component
-    setDisplayErrors(false);
+    resetComponent();
   }, [selectedCarId]);
 
   const handleAdd = (): void => {
     let requirementError = false;
     let hasError = false;
-    Object.keys(validatorsMapper).forEach((v: string) => {
-      if (validatorsMapper[v].isRequired && !values[v]) {
+    Object.keys(model).forEach((v: string) => {
+      if (model[v].isRequired && !values[v]) {
         requirementError = true;
       }
     });
@@ -45,34 +60,39 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
     history.push('/');
   };
 
-  const editFields = (
-    target: string,
-    value: string | number,
-    isErrors: boolean
+  const onInputChange = (
+    e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>,
+    selector: string
   ): void => {
+    const newValue = e.currentTarget.value;
+    const newError = validate(selector, newValue);
     setValues({
       transmission: 'automatic', // default
       ...values,
-      [target]: value,
+      [selector]: newValue,
     });
-
     setErrors({
       ...errors,
-      [target]: isErrors,
+      [selector]: newError,
     });
   };
+
+  const IsError = isErrorExist(errors);
+
   return (
     <div className="right-side">
       <div className="form">
         {['model', 'manufacturer', 'transmission', 'co2', 'image'].map(
           (c: string) => (
             <CarInput
-              isEdit={!!selectedCarId} // otherwise new car
+              onChange={onInputChange}
+              isEdit={isEdit} // otherwise new car
               displayErrors={displayErrors}
-              editFields={editFields}
               entityId={selectedCarId}
               key={c}
               selector={c}
+              value={values[c]}
+              error={errors[c]}
             />
           )
         )}
@@ -80,7 +100,7 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
           <button onClick={handleAdd}>{selectedCarId ? 'Save' : 'Add'}</button>
           <button onClick={handleCancel}>Cancel</button>
         </div>
-        {displayErrors && (
+        {displayErrors && IsError && (
           <div className="warning-messages">
             You need to fix the above errors first
           </div>
