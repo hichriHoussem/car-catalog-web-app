@@ -48,9 +48,26 @@
 .right-side > .form,
 .right-side > .info {
   margin: 0 auto;
-  width: 317px;
+  width: 550px;
   position: relative;
   top: 35%;
+  display: flex;
+}
+
+.form-fields {
+  width: 320px;
+}
+.field-image-preview,
+.form-image-preview {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #a0a0a0;
+  overflow: hidden;
+  background-color: #cacaca;
+}
+.form-image-preview > img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .right-side > .form > .car-action {

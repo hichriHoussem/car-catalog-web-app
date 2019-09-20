@@ -32,13 +32,18 @@ function CarInfo(props: RouteComponentProps<TParams>) {
   return (
     <div className="right-side">
       <div className="info">
-        {Object.keys(selectedCar[0]).map((c: string) => (
-          <InfoLine key={c} car={selectedCar[0]} selector={c} />
-        ))}
+        <div className="form-fields">
+          {['model', 'manufacturer', 'transmission', 'co2'].map((c: string) => (
+            <InfoLine key={c} car={selectedCar[0]} selector={c} />
+          ))}
 
-        <div className="car-action">
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleRemove}>Remove</button>
+          <div className="car-action">
+            <button onClick={handleEdit}>Edit</button>
+            <button onClick={handleRemove}>Remove</button>
+          </div>
+        </div>
+        <div className="info-line image field-image-preview">
+          <img alt="" src={selectedCar[0].image} id="image-preview" />
         </div>
       </div>
     </div>

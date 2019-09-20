@@ -65,32 +65,37 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
   return (
     <div className="right-side">
       <div className="form">
-        {['model', 'manufacturer', 'transmission', 'co2', 'image'].map(
-          (c: string) => (
-            <CarInput
-              onChange={onInputChange}
-              isEdit={isEdit} // otherwise new car
-              displayErrors={displayErrors}
-              entityId={selectedCarId}
-              key={c}
-              selector={c}
-              value={values[c]}
-              error={errors[c]}
-            />
-          )
-        )}
+        <div className="form-fields">
+          {['model', 'manufacturer', 'transmission', 'co2', 'image'].map(
+            (c: string) => (
+              <CarInput
+                onChange={onInputChange}
+                isEdit={isEdit} // otherwise new car
+                displayErrors={displayErrors}
+                entityId={selectedCarId}
+                key={c}
+                selector={c}
+                value={values[c]}
+                error={errors[c]}
+              />
+            )
+          )}
 
-        {imagePreview && <img alt="" src={imagePreview} id="image-preview" />}
-
-        <div className="car-action">
-          <button onClick={handleAdd}>{selectedCarId ? 'Save' : 'Add'}</button>
-          <button onClick={handleCancel}>Cancel</button>
-        </div>
-        {displayErrors && IsError && (
-          <div className="warning-messages">
-            You need to fix the above errors first
+          <div className="car-action">
+            <button onClick={handleAdd}>
+              {selectedCarId ? 'Save' : 'Add'}
+            </button>
+            <button onClick={handleCancel}>Cancel</button>
           </div>
-        )}
+          {displayErrors && IsError && (
+            <div className="warning-messages">
+              You need to fix the above errors first
+            </div>
+          )}
+        </div>
+        <div className="form-image-preview">
+          {imagePreview && <img alt="" src={imagePreview} id="image-preview" />}
+        </div>
       </div>
     </div>
   );

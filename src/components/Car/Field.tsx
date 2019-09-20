@@ -47,21 +47,11 @@ export function InfoLine(props: IInfoLine) {
     return null;
   }
 
-  switch (selector) {
-    case 'image':
-      return (
-        <div className={`info-line ${selector}`}>
-          <img alt="" src={car[selector]} id="image-preview" />
-        </div>
-      );
-
-    default:
-      return (
-        <div className={`info-line ${selector}`}>
-          <div className="label">{selector}</div>
-          <span>:</span>
-          {car[selector]}
-        </div>
-      );
-  }
+  return (
+    <div className={`info-line ${selector}`}>
+      <div className="label">{selector}</div>
+      <span>:</span>
+      {car[selector]}
+    </div>
+  );
 }
