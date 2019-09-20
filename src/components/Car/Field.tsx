@@ -51,7 +51,7 @@ export function InfoLine(props: IInfoLine) {
     case 'image':
       return (
         <div className={`info-line ${selector}`}>
-          <img src={car[selector]} id="image-preview" />
+          <img alt="" src={car[selector]} id="image-preview" />
         </div>
       );
 

@@ -11,7 +11,6 @@ import {
   initValues,
 } from '../../utils';
 import NewCar from '../../interfaces/new-car';
-import { model } from '../../data';
 
 const CarForm: React.FC = (props: RouteComponentProps) => {
   const { match, history } = props;
@@ -82,7 +81,7 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
           )
         )}
 
-        {imagePreview && <img src={imagePreview} id="image-preview" />}
+        {imagePreview && <img alt="" src={imagePreview} id="image-preview" />}
 
         <div className="car-action">
           <button onClick={handleAdd}>{selectedCarId ? 'Save' : 'Add'}</button>
