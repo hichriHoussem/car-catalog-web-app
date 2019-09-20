@@ -42,7 +42,7 @@ export function getNewList(values: NewCar, currentId: string): any {
   } else {
     // new car
     const idList = oldCars.map((c: NewCar) => c.id);
-    const newElementId = Math.max(...idList) + 1;
+    const newElementId = idList.length ? Math.max(...idList) + 1 : 1;
     return {
       newId: newElementId,
       newList: [
