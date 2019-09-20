@@ -107,7 +107,7 @@ export const initErrors = (values: object): object => {
 export const initValues = (): object => {
   const result = {};
   Object.keys(model).forEach((v: string) => {
-    result[v] = '';
+    result[v] = v === 'transmission' ? 'automatic' : '';
   });
   return result;
 };
