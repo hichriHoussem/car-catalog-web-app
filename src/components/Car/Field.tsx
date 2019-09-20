@@ -1,18 +1,9 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import Radio from '../Radio';
 import FieldDetails from '../../interfaces/field-details';
 import IInfoLine from '../../interfaces/info-line';
 
 export class CarInput extends Component<FieldDetails> {
-  componentWillReceiveProps = (nextProps: FieldDetails): void => {
-    // const { entityId, selector } = this.props;
-    // if (entityId !== nextProps.entityId || selector !== nextProps.selector) {
-    //   this.setState({
-    //     value: getValues(nextProps.entityId)[nextProps.selector],
-    //   });
-    // }
-  };
-
   onInputChange = (
     e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
   ): void => this.props.onChange(e, this.props.selector);
