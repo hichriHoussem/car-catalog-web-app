@@ -18,6 +18,7 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
   const selectedCarId = match.params.id;
   const isEdit = !!selectedCarId;
   const [values, setValues] = useState<NewCar>({});
+  const [imagePreview, setImagePreview] = useState<any>(values.image);
   const [errors, setErrors] = useState<object>({});
   const [displayErrors, setDisplayErrors] = useState<boolean>(false);
 
@@ -44,11 +45,13 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
     history.push('/');
   };
 
-  const onInputChange = (
-    e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>,
-    selector: string
-  ): void => {
-    const newValue = e.currentTarget.value;
+  const onInputChange = (e: any, selector: string): void => {
+    const newValue = selector === 'image' ? e.base64 : e.currentTarget.value;
+
+    if (selector === 'image') {
+      setImagePreview(newValue);
+    }
+
     const newError = validate(selector, newValue);
     setValues({
       transmission: 'automatic', // default
@@ -78,6 +81,9 @@ const CarForm: React.FC = (props: RouteComponentProps) => {
             />
           )
         )}
+
+        {imagePreview && <img src={imagePreview} id="image-preview" />}
+
         <div className="car-action">
           <button onClick={handleAdd}>{selectedCarId ? 'Save' : 'Add'}</button>
           <button onClick={handleCancel}>Cancel</button>

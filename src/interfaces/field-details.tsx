@@ -8,10 +8,7 @@ interface FieldDetails {
   entityId?: string;
   error: boolean;
   value: string;
-  onChange: (
-    e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>,
-    selector: string
-  ) => void;
+  onChange: (e: any, selector: string) => void;
 }
 
 export default FieldDetails;

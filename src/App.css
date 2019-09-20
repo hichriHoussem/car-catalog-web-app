@@ -128,3 +128,7 @@
   color: #f00;
   text-align: left;
 }
+.form > img,
+.image > img {
+  width: 350px;
+}

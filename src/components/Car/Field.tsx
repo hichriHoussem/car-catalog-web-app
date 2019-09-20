@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import Radio from '../Radio';
 import FieldDetails from '../../interfaces/field-details';
 import IInfoLine from '../../interfaces/info-line';
+import FileBase64 from 'react-file-base64';
 
 export class CarInput extends Component<FieldDetails> {
-  onInputChange = (
-    e: React.FormEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>
-  ): void => this.props.onChange(e, this.props.selector);
+  onInputChange = (e: any): void => this.props.onChange(e, this.props.selector);
 
   render() {
     const { selector, displayErrors, error, value } = this.props;
@@ -17,7 +16,7 @@ export class CarInput extends Component<FieldDetails> {
       inputType = <Radio value={value || ''} onChange={this.onInputChange} />;
     }
     if (selector === 'image') {
-      // inputType = <Radio onChange={onRadioChange} />;
+      inputType = <FileBase64 onDone={this.onInputChange} />;
     }
 
     return (
@@ -37,11 +36,26 @@ export class CarInput extends Component<FieldDetails> {
 
 export function InfoLine(props: IInfoLine) {
   const { selector, car } = props;
-  return (
-    <div className="info-line">
-      <div className="label">{selector}</div>
-      <span>:</span>
-      {car[selector]}
-    </div>
-  );
+
+  if (!car[selector]) {
+    return null;
+  }
+
+  switch (selector) {
+    case 'image':
+      return (
+        <div className={`info-line ${selector}`}>
+          <img src={car[selector]} id="image-preview" />
+        </div>
+      );
+
+    default:
+      return (
+        <div className={`info-line ${selector}`}>
+          <div className="label">{selector}</div>
+          <span>:</span>
+          {car[selector]}
+        </div>
+      );
+  }
 }
